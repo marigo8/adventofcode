@@ -1,10 +1,10 @@
 /*
 TODOS:
 - convert list into a usable array. CHECK!
-- create a function.
-  - finds surface area.
-  - finds smallest side.
-    - adds that value to the total surface area.
+- create a function. CHECK!
+  - finds surface area. CHECK!
+  - finds smallest side. CHECK!
+    - adds that value to the total surface area. CHECK!
 - use array in function.
   - also keep track of total surface area
 */
@@ -50,7 +50,27 @@ function setUpArray(list){
   return newArray;
 }
 
+function smallestSide(s0,s1,s2){
+  var winner = s0
+  if(winner > s1){
+    winner = s1;
+  }else if(winner > s2){
+    winner = s2;
+  }
+  return winner;
+}
+
+function findWrapAmount(array){
+  var l = array[0], w = array[1], h = array[2];
+  var side0 = l*w, side1 = w*h, side2 = h*l;
+  
+  var subtotal = 2*side0 + 2*side1 + 2*side2;
+  
+  var total = subtotal + smallestSide(side0,side1,side2);
+  return total;
+}
+
 
 var dimensionsList = prompt("Dimensions please?");
 var dimensionsArray = setUpArray(dimensionsList);
-
+findWrapAmount(dimensionsArray[0]);
