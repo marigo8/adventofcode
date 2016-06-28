@@ -11,8 +11,9 @@ function upOrDown(direction){
   }
 }
 
-santa = 0;
-directions = prompt("directions?");
+var santa = 0;
+var directions = prompt("directions?");
+
 
 for(var i = 0, n = directions.length; i < n; i++){
   santa += upOrDown(directions[i]);
