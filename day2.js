@@ -1,5 +1,7 @@
 /*
-TODOS: CHECK!
+TODOS:
+
+Part 1: CHECK!
 - convert list into a usable array. CHECK!
 - create a function. CHECK!
   - finds surface area. CHECK!
@@ -7,6 +9,12 @@ TODOS: CHECK!
     - adds that value to the total surface area. CHECK!
 - use array in function. CHECK!
   - also keep track of total surface area CHECK!
+  
+Part 2:
+- create findRibbonAmount function
+  - use smallest2sides (returns an array of two numbers: small = [x,y])
+  - 2(small[0]) + 2(small[1])
+  - add that to l*w*h
 */
 
 
@@ -60,6 +68,26 @@ function smallestSide(s0,s1,s2){
   }
   return winner;
 }
+function smallest2Numbers(s0,s1,s2){
+  // find greatest side
+  var winner = s0
+  if(winner < s1){
+    winner = s1;
+  }
+  if(winner < s2){
+    winner = s2;
+  }
+  
+  // return everything but the greatest side
+  switch(winner){
+    case s0:
+      return [s1,s2];
+    case s1:
+      return [s0,s2];
+    case s2:
+      return [s0,s1];
+  }
+}
 
 function findWrapAmount(array){
   var l = array[0], w = array[1], h = array[2];
@@ -71,6 +99,15 @@ function findWrapAmount(array){
   return total;
 }
 
+function findRibbonAmount(array){
+  var total;
+  var l = array[0], w = array[1], h = array[2];
+  var small = smallest2Numbers(l,w,h);
+  total = 2*small[0] + 2*small[1];
+  total += l*w*h;
+  return total;
+}
+
 
 var dimensionsList = prompt("Dimensions please?");
 var dimensionsArray = setUpArray(dimensionsList);
@@ -79,4 +116,10 @@ var wrapTotal = 0;
 for(var i = 0, n = dimensionsArray.length; i < n; i++){
   wrapTotal += findWrapAmount(dimensionsArray[i]);
 }
-alert(wrapTotal);
+alert("wrap required: "+wrapTotal);
+
+var ribbonTotal = 0;
+for(var i = 0, n = dimensionsArray.length; i < n; i++){
+  ribbonTotal += findRibbonAmount(dimensionsArray[i]);
+}
+alert("ribbons required: "+ribbonTotal);
