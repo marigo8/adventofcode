@@ -15,8 +15,8 @@
 */
 
 //FUNCTIONS
-function displayLocation(){ // for debugging purposes
-  console.log("( "+x+", "+y+")");
+function displayLocation(person){ // for debugging purposes
+  console.log("( "+person.x+", "+person.y+")");
 }
 
 function checkVisited(xyString, arrayToSearch){ // checks if the house exists in the houses array
@@ -28,34 +28,47 @@ function checkVisited(xyString, arrayToSearch){ // checks if the house exists in
   return false; // if the house is nowhere to be found, return false
 }
 
-function move(direction){
+function move(direction, person){
   switch(direction){
     case "^":
-      y++;
+      person.y++;
       break;
     case ">":
-      x++;
+      person.x++;
       break;
     case "v":
-      y--;
+      person.y--;
       break;
     case "<":
-      x--;
+      person.x--;
       break;
   }
-  // displayLocation();
+  displayLocation(person);
 }
 
-function createHouse(){
-  
+function takeDirections(person){
+  move(directions[i],person);
+  xyString = person.x+","+person.y;
+  if(!checkVisited(xyString, houses)){
+    console.log("adding house "+xyString)
+    houses.push(xyString);
+    console.log("added house "+xyString)
+  }
+}
+
+// OBJECTS
+var Santa = {
+  x: 0,
+  y: 0
+}
+var Robot = {
+  x: 0,
+  y: 0
 }
 
 //VARIABLES
 var directions = prompt("Directions please?");
-var x = 0, y = 0;
-var xyString;
 var houseCounter = 0;
-
 var houses = ["0,0"];
 
 
@@ -64,11 +77,13 @@ var houses = ["0,0"];
 */
 
 for(var i = 0, n = directions.length; i < n; i++){
-  xyString = x+","+y;
-  if(!checkVisited(xyString, houses)){
-    houses.push(xyString)
+  if(i % 2 === 0){
+    console.log("\nSanta:")
+    takeDirections(Santa);
+  }else{
+    console.log("\nRobot:")
+    takeDirections(Robot);
   }
-  move(directions[i]);
 }
 alert(houses.length);
 console.log(houses.length);
