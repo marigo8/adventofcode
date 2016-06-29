@@ -6,7 +6,8 @@
     - v: y--
     - <: x--
   - need to keep track of houses
-    
+    - use arrays
+      - house[x][y] = true
 */
 
 /*
@@ -14,8 +15,17 @@
 */
 
 //FUNCTIONS
-function displayLocation(){
+function displayLocation(){ // for debugging purposes
   console.log("( "+x+", "+y+")");
+}
+
+function checkVisited(xyString, arrayToSearch){ // checks if the house exists in the houses array
+  for(var i = 0, n = arrayToSearch.length; i < n; i++){ // for every house in the array.
+    if(arrayToSearch[i] == xyString){ // if the house is in the array
+      return true // return true for visited
+    }
+  }
+  return false; // if the house is nowhere to be found, return false
 }
 
 function move(direction){
@@ -33,7 +43,7 @@ function move(direction){
       x--;
       break;
   }
-  displayLocation();
+  // displayLocation();
 }
 
 function createHouse(){
@@ -43,31 +53,22 @@ function createHouse(){
 //VARIABLES
 var directions = prompt("Directions please?");
 var x = 0, y = 0;
-var houseCounter = 1; // not 0 because of starting point.
+var xyString;
+var houseCounter = 0;
 
-//OBJECTS
-// use a constructor that creates a house with the properties: x and y
-/*example
-{
-  id: 32, <-- maybe?
-  x: 13,
-  y: 42
-}
-*/
-var House = function(){
-  this.x = x;
-  this.y = y;
-}
+var houses = ["0,0"];
+
 
 /*
 ---MAIN CODE---
 */
 
-//p mark house(0,0) as visited
-
 for(var i = 0, n = directions.length; i < n; i++){
-  move(directions[i]);
-  if(house[/*left off here*/][]){
-    create house;
+  xyString = x+","+y;
+  if(!checkVisited(xyString, houses)){
+    houses.push(xyString)
   }
+  move(directions[i]);
 }
+alert(houses.length);
+console.log(houses.length);
