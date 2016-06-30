@@ -3,9 +3,10 @@ OBJECTIVES:
 - separate strings into an array
 - Check if "nice" string
   Nice strings have ALL of the following properties (AND):
-  - at least 3 variables (aeiou)
-  - at least 1 char twice in a row
-  - does not contain ab, cd, pq, or xy
+  - has a pair of two letters that repeat without overlapping.
+  - has double letters with one letter inbetween
+    - check if each letter is the same as the letter 2 steps after it.
+  I may have to have two separate for loops for each of the properties
 - Count number of "nice" strings
 */
 
@@ -36,29 +37,28 @@ function isOneOf(string,array){
   return false;
 }
 
-function checkIfNice(string){
-  var vowelCount = 0;
-  var hasDouble = false;
-  var hasTabooStrings = false;
-  var concat;
+function checkForRule1(string){
+  var followsRule = false;
   for(var i = 0, n = string.length; i < n; i++){
-    concat = (string[i] + string[i + 1]) || string[i];
-    if(isOneOf(string[i],vowels)){
-      vowelCount++;
-    }
-    if(string[i] == string[i + 1]){
-      hasDouble = true;
-    }
-    if(isOneOf(concat,taboos)){
-      hasTabooStrings = true;
+    for(var j = 0, m = string.length; j < m; j++){
+      if(i != j && i + 1 != j && j + 1 != i){
+        if(string[i]+string[i + 1] == string[j]+string[j + 1]){
+          followsRule = true;
+        }
+      }
     }
   }
-  if(vowelCount >= 3 && hasDouble == true && hasTabooStrings == false){
-    niceStrings.push(string);
-    return true;
-  }else{
-    return false;
+  return followsRule;
+}
+
+function checkForRule2(string){
+  followsRule = false;
+  for(var i = 0, n = string.length; i < n; i++){
+    if(string[i] == string[i + 2]){
+      followsRule = true;
+    }
   }
+  return followsRule;
 }
 
 // VARIABLES
@@ -71,7 +71,10 @@ var taboos = ["ab","cd","pq","xy"];
 /*
 ---MAIN CODE---
 */
-
 for(var i = 0, n = strings.length; i < n; i++){
-  niceCount += checkIfNice(strings[i]);
+  if(checkForRule1(strings[i]) && checkForRule2(strings[i])){
+    niceStrings[i] = strings[i];
+    niceCount++;
+  }
 }
+console.log(niceCount);
