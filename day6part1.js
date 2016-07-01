@@ -68,7 +68,7 @@ function stringtoArray(string){
           j += 3;
         }
       }
-      array[1].push(numString);
+      array[1].push(Number(numString));
       numString = "";
       step++;
     }
@@ -86,7 +86,7 @@ function stringtoArray(string){
           j += 3;
         }
       }
-      array[2].push(numString);
+      array[2].push(Number(numString));
       numString = "";
       step++;
     }
